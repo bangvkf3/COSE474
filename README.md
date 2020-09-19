@@ -5,3 +5,7 @@ Repo for COSE474(01) - Deep Learning @KoreaUniversity
 - Tensorflow@1.13.1
 - matplotlib
 - numpy@1.16.6
+
+## Assignments
+ - [x] Perceptron
+ - [ ] Multi-Layer Perceptron
