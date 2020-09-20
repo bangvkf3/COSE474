@@ -1,0 +1,4 @@
+model_checkpoint_path: "/Users/junhyeokbang/myrepo/COSE474/Assignments/Assignment#2/MNIST_tf/runs/1600587404/checkpoints/model-85"
+all_model_checkpoint_paths: "/Users/junhyeokbang/myrepo/COSE474/Assignments/Assignment#2/MNIST_tf/runs/1600587404/checkpoints/model-34"
+all_model_checkpoint_paths: "/Users/junhyeokbang/myrepo/COSE474/Assignments/Assignment#2/MNIST_tf/runs/1600587404/checkpoints/model-48"
+all_model_checkpoint_paths: "/Users/junhyeokbang/myrepo/COSE474/Assignments/Assignment#2/MNIST_tf/runs/1600587404/checkpoints/model-85"

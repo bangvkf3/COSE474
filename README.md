@@ -8,4 +8,10 @@ Repo for COSE474(01) - Deep Learning @KoreaUniversity
 
 ## Assignments
  - [x] Perceptron
- - [ ] Multi-Layer Perceptron
+ - [x] Multi-Layer Perceptron
+   - 4 Layer
+   - Weight initializer(He, Xavier)
+   - Dropout
+   - Weight decay
+   - Early stopping epoch
+   - Analyzing models with TensorBoard

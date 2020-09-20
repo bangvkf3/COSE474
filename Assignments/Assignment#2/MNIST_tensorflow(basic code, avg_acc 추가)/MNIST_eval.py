@@ -1,5 +1,10 @@
 import tensorflow as tf
+import os
 from tensorflow.examples.tutorials.mnist import input_data
+
+tf.logging.set_verbosity(tf.logging.ERROR)
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True, validation_size=5000)
 # 모델이 저장된 checkpoint 경로
