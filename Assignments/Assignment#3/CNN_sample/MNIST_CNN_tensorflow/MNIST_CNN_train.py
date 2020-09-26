@@ -39,8 +39,9 @@ correct_prediction = tf.equal(tf.argmax(hypothesis, 1), tf.argmax(Y, 1))# Y = [0
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))#cast 함수는 형변환 함수, e.g., True -> 1.0 False -> 0.0, # 0.0 1.0 0.0 1.0 1.0 1.0...
 # reduce_mean으로 batch 안에 있는 data들의 평균 정확도를 계산
 
+# weight decay
 costs = []
-for var in tf.trainable_variables():
+for var in tf.trainable_variables():  # 리스트 원소 생성한 Variable
     costs.append(tf.nn.l2_loss(var))
 l2_loss = tf.add_n(costs)
 
