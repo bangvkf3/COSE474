@@ -274,5 +274,5 @@ dmypy.json
 .idea
 
 MNIST_data/
-Evaluation_result
-~$Evaluation_result
+
+.xlsx
