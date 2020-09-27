@@ -78,9 +78,17 @@ Settings = {
 # Choose a setting
 setting = Settings['SET#1']
 
-# clean flags
-tf.flags.FLAGS.__delattr__()
-tf.flags.DEFINE_string("f", '', 'kernel')
+# clean flags, graph
+def del_all_flags(FLAGS):
+    flags_dict = FLAGS._flags()
+    keys_list = [keys for keys in flags_dict]
+    for keys in keys_list:
+        FLAGS.__delattr__(keys)
+del_all_flags(tf.flags.FLAGS)
+tf.reset_default_graph()
+
+# 플래그 오류
+tf.flags.DEFINE_string("f", "", "kernel")
 
 # Model Hyperparameters
 tf.flags.DEFINE_float("lr", setting['LR'], "learning rate (default=0.1)")
@@ -207,6 +215,6 @@ with tf.Graph().as_default():
         training_time = (time.time() - start_time) / 60
         print('Learning Finished!')
         print('Validation Max Accuracy:', max)
-        print('Early stopped time:', math.ceil(current_step))
+        print('Early stopped time:', math.ceil(current_step/352))
         print('training time: ', training_time)
 
