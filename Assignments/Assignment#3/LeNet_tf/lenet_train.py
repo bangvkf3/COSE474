@@ -65,9 +65,19 @@ Settings = {
     },
     'SET#6': {
         'BATCH_SIZE': 128,
+        'LR': 0.01,
+        'EPOCH': 200,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 0.99,
+        'DECAY_STEPS': 1000
+    },
+    'SET#7': {
+        'BATCH_SIZE': 128,
         'LR': 0.001,
         'EPOCH': 200,
-        'KEEP_PROB': 1.0,
+        'KEEP_PROB': 0.9,
         'L2_REG_LAMBDA': 0.0001,
         'DATA_AUGMENTATION': True,
         'LR_DECAY': 1,

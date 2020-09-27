@@ -11,10 +11,18 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 TimeStamp = {
     'Setting#1': "1601189007",
-    'Setting#2': "1601190288"
+    'Setting#2': "1601196973",
+    'Setting#3': "1601191502",
+    'Setting#4': "1601193083",
+    'Setting#5': "1601189007",
+    'Setting#6': "1601198557"
 }
 
 (x_train_val, y_train_val), (x_test, y_test) = load_data()
+y_test_one_hot = np.eye(10)[y_test]  # one-hot encoding 만들기
+y_test_one_hot = np.squeeze(y_test_one_hot, axis=1)
+x_test = (x_test / 127.5) - 1
+
 
 def del_all_flags(FLAGS):  # flags 초기화 함수
     flags_dict = FLAGS._flags()
@@ -27,14 +35,14 @@ for setting, stamp in TimeStamp.items():
     #flag 초기화
     del_all_flags(tf.flags.FLAGS)
 
+    # 그래프 초기화
+    tf.reset_default_graph()
+
     # Eval Parameters
     tf.flags.DEFINE_string("checkpoint_dir", f"./runs/{stamp}/checkpoints", "Checkpoint directory from training run")
 
     FLAGS = tf.flags.FLAGS
     # ==================================================
-    y_test_one_hot = np.eye(10)[y_test] #one-hot encoding 만들기
-    y_test_one_hot = np.squeeze(y_test_one_hot, axis=1)
-    x_test = (x_test/127.5) - 1
 
     checkpoint_file = tf.train.latest_checkpoint(FLAGS.checkpoint_dir)#가장 validation accuracy가 높은 시점 load
     graph = tf.Graph()

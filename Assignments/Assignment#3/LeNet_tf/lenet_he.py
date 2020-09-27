@@ -59,7 +59,6 @@ class LeNet:
         self.W5 = tf.get_variable("W5", shape=[84, 10], initializer=tf.contrib.layers.variance_scaling_initializer())
         self.b5 = tf.Variable(tf.random_normal([10]))
         self.hypothesis = tf.nn.xw_plus_b(self.L4, self.W5, self.b5, name="hypothesis")
-        self.cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=self.hypothesis, labels=self.Y))
 
         with tf.variable_scope('logit'):
             self.predictions = tf.argmax(self.hypothesis, 1, name="predictions")

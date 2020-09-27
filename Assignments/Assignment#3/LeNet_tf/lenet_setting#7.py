@@ -37,27 +37,36 @@ class LeNet:
         self.L2 = tf.nn.max_pool(self.L2, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="VALID")
 
         # (5, 5, 16) feature map
+        self.W3 = tf.Variable(tf.random_normal([3, 3, 16, 16], stddev=0.01)) # HE: stddev=sqrt(2/5*5*16)
+        # filter2 적용 -> (5, 5, 16) * filter1: 3*3, input_channel: 16, output_channel(# of filters): 16
+        self.L3 = tf.nn.conv2d(self.L2, self.W3, strides=[1, 1, 1, 1], padding="SAME")
+        # relu -> (5, 5, 16)
+        self.L3 = tf.nn.relu(self.L3)
+        # max_pooling 적용 -> (5, 5, 16)
+        self.L3 = tf.nn.max_pool(self.L3, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="SAME")
+
+        # (5, 5, 16) feature map
         # 평탄화 -> (5 * 5 *16)
-        self.L2_flat = tf.reshape(self.L2, [-1, 5*5*16])
+        self.L3_flat = tf.reshape(self.L3, [-1, 5*5*16])
         
         # FC1 추가 (5 * 5 * 16, 120) -> (120)
-        self.W3 = tf.get_variable("W3", shape=[5 * 5 * 16, 120], initializer=tf.contrib.layers.variance_scaling_initializer())
-        self.b3 = tf.Variable(tf.random_normal([120]))
-        self.L3 = tf.nn.relu(tf.matmul(self.L2_flat, self.W3) + self.b3)
-        self.L3 = tf.nn.dropout(self.L3, keep_prob=self.keep_prob)
+        self.W4 = tf.get_variable("W4", shape=[5 * 5 * 16, 120], initializer=tf.contrib.layers.variance_scaling_initializer())
+        self.b4 = tf.Variable(tf.random_normal([120]))
+        self.L4 = tf.nn.relu(tf.matmul(self.L3_flat, self.W4) + self.b4)
+        self.L4 = tf.nn.dropout(self.L4, keep_prob=self.keep_prob)
 
         # (120) features
         # FC2 추가 (120, 84) -> (84)
-        self.W4 = tf.get_variable("W4", shape=[120, 84], initializer=tf.contrib.layers.variance_scaling_initializer())
-        self.b4 = tf.Variable(tf.random_normal([84]))
-        self.L4 = tf.nn.relu(tf.matmul(self.L3, self.W4) + self.b4)
-        self.L4 = tf.nn.dropout(self.L4, keep_prob=self.keep_prob)
+        self.W5 = tf.get_variable("W5", shape=[120, 84], initializer=tf.contrib.layers.variance_scaling_initializer())
+        self.b5 = tf.Variable(tf.random_normal([84]))
+        self.L5 = tf.nn.relu(tf.matmul(self.W4, self.W5) + self.b5)
+        self.L5 = tf.nn.dropout(self.L5, keep_prob=self.keep_prob)
 
         # (84) features
         # Softmax layer 추가 (84) -> (10)
-        self.W5 = tf.get_variable("W5", shape=[84, 10], initializer=tf.contrib.layers.variance_scaling_initializer())
-        self.b5 = tf.Variable(tf.random_normal([10]))
-        self.hypothesis = tf.nn.xw_plus_b(self.L4, self.W5, self.b5, name="hypothesis")
+        self.W6 = tf.get_variable("W6", shape=[84, 10], initializer=tf.contrib.layers.variance_scaling_initializer())
+        self.b6 = tf.Variable(tf.random_normal([10]))
+        self.hypothesis = tf.nn.xw_plus_b(self.L5, self.W6, self.b6, name="hypothesis")
 
         with tf.variable_scope('logit'):
             self.predictions = tf.argmax(self.hypothesis, 1, name="predictions")
