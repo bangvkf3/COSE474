@@ -5,6 +5,7 @@ import datetime
 from tensorflow.keras.datasets.cifar10 import load_data
 import data_helpers as dh
 from lenet import LeNet
+import math
 
 tf.logging.set_verbosity(tf.logging.ERROR)
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
@@ -76,6 +77,10 @@ Settings = {
 
 # Choose a setting
 setting = Settings['SET#1']
+
+# clean flags
+tf.flags.FLAGS.__delattr__()
+tf.flags.DEFINE_string("f", '', 'kernel')
 
 # Model Hyperparameters
 tf.flags.DEFINE_float("lr", setting['LR'], "learning rate (default=0.1)")
@@ -202,6 +207,6 @@ with tf.Graph().as_default():
         training_time = (time.time() - start_time) / 60
         print('Learning Finished!')
         print('Validation Max Accuracy:', max)
-        print('Early stopped time:', current_step//352 + 1)
+        print('Early stopped time:', math.ceil(current_step))
         print('training time: ', training_time)
 
