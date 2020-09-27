@@ -275,4 +275,4 @@ dmypy.json
 
 MNIST_data/
 
-.xlsx
+*.xlsx

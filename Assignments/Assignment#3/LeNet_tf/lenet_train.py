@@ -10,20 +10,88 @@ tf.logging.set_verbosity(tf.logging.ERROR)
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
+# Hyperparameters
+Settings = {
+    'SET#1': {
+        'BATCH_SIZE': 128,
+        'LR': 0.001,
+        'EPOCH': 200,
+        'KEEP_PROB': 0.9,
+        'L2_REG_LAMBDA': 0,
+        'DATA_AUGMENTATION': False,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#2': {
+        'BATCH_SIZE': 128,
+        'LR': 0.001,
+        'EPOCH': 200,
+        'KEEP_PROB': 0.9,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': False,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#3': {
+        'BATCH_SIZE': 128,
+        'LR': 0.001,
+        'EPOCH': 200,
+        'KEEP_PROB': 0.9,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#4': {
+        'BATCH_SIZE': 128,
+        'LR': 0.001,
+        'EPOCH': 200,
+        'KEEP_PROB': 0.9,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 0.99,
+        'DECAY_STEPS': 1000
+    },
+    'SET#5': {
+        'BATCH_SIZE': 128,
+        'LR': 0.001,
+        'EPOCH': 200,
+        'KEEP_PROB': 1.0,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#6': {
+        'BATCH_SIZE': 128,
+        'LR': 0.001,
+        'EPOCH': 200,
+        'KEEP_PROB': 1.0,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+}
+
+# Choose a setting
+setting = Settings['SET#1']
+
 # Model Hyperparameters
-tf.flags.DEFINE_float("lr", 0.001, "learning rate (default=0.1)")
-tf.flags.DEFINE_float("lr_decay", 0.99, "learning rate decay rate(default=0.1)")
-tf.flags.DEFINE_float("l2_reg_lambda", 0.0001, "L2 regularization lambda (default: 0.0)")
-tf.flags.DEFINE_float("keep_prob", 0.9, "keep probability for dropout (default: 1.0)")
+tf.flags.DEFINE_float("lr", setting['LR'], "learning rate (default=0.1)")
+tf.flags.DEFINE_float("lr_decay", setting['LR_DECAY'], "learning rate decay rate(default: 0.1)")
+tf.flags.DEFINE_integer("decay_steps", setting['DECAY_STEPS'], "learning rate decay steps(default: 1000)")
+tf.flags.DEFINE_float("l2_reg_lambda", setting['L2_REG_LAMBDA'], "L2 regularization lambda (default: 0.0)")
+tf.flags.DEFINE_float("keep_prob", setting['KEEP_PROB'], "keep probability for dropout (default: 1.0)")
 tf.flags.DEFINE_integer("num_classes", 10, "The number of classes (default: 10)")
 
 # Training parameters
-tf.flags.DEFINE_integer("batch_size", 128, "Batch Size (default: 64)")
-tf.flags.DEFINE_integer("num_epochs", 200, "Number of training epochs (default: 200)")
+tf.flags.DEFINE_integer("batch_size", setting['BATCH_SIZE'], "Batch Size (default: 64)")
+tf.flags.DEFINE_integer("num_epochs", setting['EPOCH'], "Number of training epochs (default: 200)")
 tf.flags.DEFINE_integer("evaluate_every", 350, "Evaluate model on dev set after this many steps (default: 100)")
 tf.flags.DEFINE_integer("checkpoint_every", 350, "Save model after this many steps (default: 100)")
 tf.flags.DEFINE_integer("num_checkpoints", 3, "Number of checkpoints to store (default: 5)")
-tf.flags.DEFINE_boolean("data_augmentation", True, "data augmentation option")
+tf.flags.DEFINE_boolean("data_augmentation", setting['DATA_AUGMENTATION'], "data augmentation option")
 
 # Misc Parameters
 tf.flags.DEFINE_boolean("allow_soft_placement", True, "Allow device soft device placement")
@@ -44,8 +112,11 @@ with tf.Graph().as_default():
         global_step = tf.Variable(0, name="global_step", trainable=False) # iteration 수
 
         # * hint learning rate decay를 위한 operation을 통해 감쇠된 learning rate를 optimizer에 적용
+        decayed_lr = tf.train.exponential_decay(FLAGS.lr, global_step, FLAGS.decay_steps, FLAGS.lr_decay, staircase=True)
+        # decayed_learning_rate = learning_rate * decay_rate ^ (global_step / decay_steps)
 
-        optimizer = tf.train.AdamOptimizer(learning_rate=FLAGS.lr) #Optimizer
+
+        optimizer = tf.train.AdamOptimizer(learning_rate=decayed_lr) #Optimizer
         grads_and_vars = optimizer.compute_gradients(lenet.loss) # gradient 계산
         train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step) # back-propagation
 
@@ -81,7 +152,7 @@ with tf.Graph().as_default():
             feed_dict = {
               lenet.X: x_batch,
               lenet.Y: y_batch,
-              lenet.keep_prob: FLAGS.keep_prob
+              lenet.keep_prob: FLAGS.keep_prob,
             }
             _, step, summaries, loss, accuracy = sess.run(
                 [train_op, global_step, train_summary_op, lenet.loss, lenet.accuracy],
@@ -97,7 +168,7 @@ with tf.Graph().as_default():
             feed_dict = {
               lenet.X: x_batch,
               lenet.Y: y_batch,
-              lenet.keep_prob: 1.0
+              lenet.keep_prob: 1.0,
             }
             step, summaries, loss, accuracy = sess.run(
                 [global_step, dev_summary_op, lenet.loss, lenet.accuracy],
@@ -129,5 +200,8 @@ with tf.Graph().as_default():
                     path = saver.save(sess, checkpoint_prefix, global_step=current_step) # best accuracy에 도달할 때만 모델을 저장함으로써 early stopping
                     print("Saved model checkpoint to {}\n".format(path))
         training_time = (time.time() - start_time) / 60
+        print('Learning Finished!')
+        print('Validation Max Accuracy:', max)
+        print('Early stopped time:', current_step//352 + 1)
         print('training time: ', training_time)
 
