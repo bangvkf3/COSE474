@@ -276,3 +276,5 @@ dmypy.json
 MNIST_data/
 
 *.xlsx
+
+runs/

@@ -42,8 +42,6 @@ class LeNet:
         self.L3 = tf.nn.conv2d(self.L2, self.W3, strides=[1, 1, 1, 1], padding="SAME")
         # relu -> (5, 5, 16)
         self.L3 = tf.nn.relu(self.L3)
-        # max_pooling 적용 -> (5, 5, 16)
-        self.L3 = tf.nn.max_pool(self.L3, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding="SAME")
 
         # (5, 5, 16) feature map
         # 평탄화 -> (5 * 5 *16)
@@ -59,7 +57,7 @@ class LeNet:
         # FC2 추가 (120, 84) -> (84)
         self.W5 = tf.get_variable("W5", shape=[120, 84], initializer=tf.contrib.layers.variance_scaling_initializer())
         self.b5 = tf.Variable(tf.random_normal([84]))
-        self.L5 = tf.nn.relu(tf.matmul(self.W4, self.W5) + self.b5)
+        self.L5 = tf.nn.relu(tf.matmul(self.L4, self.W5) + self.b5)
         self.L5 = tf.nn.dropout(self.L5, keep_prob=self.keep_prob)
 
         # (84) features

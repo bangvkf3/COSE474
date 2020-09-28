@@ -4,7 +4,7 @@ import time
 import datetime
 from tensorflow.keras.datasets.cifar10 import load_data
 import data_helpers as dh
-from lenet import LeNet
+from lenet002 import LeNet
 import math
 
 tf.logging.set_verbosity(tf.logging.ERROR)
@@ -73,7 +73,7 @@ Settings = {
         'LR_DECAY': 0.99,
         'DECAY_STEPS': 1000
     },
-    'SET#7': {
+    'SET#7': {  # 3x3x16 레이어 추가
         'BATCH_SIZE': 128,
         'LR': 0.001,
         'EPOCH': 200,
@@ -83,10 +83,180 @@ Settings = {
         'LR_DECAY': 1,
         'DECAY_STEPS': 1000
     },
+    'SET#8': {
+        'BATCH_SIZE': 128,
+        'LR': 0.01,  # 150에폭까지 0.01, 이후로는 0.05
+        'EPOCH': 250,
+        'KEEP_PROB': 0.9,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#9': {
+        'BATCH_SIZE': 128,
+        'LR': 0.001,  # 100에폭까지 0.001, 150에폭 까지 0.0005 이후 0.00025
+        'EPOCH': 200,
+        'KEEP_PROB': 0.9,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#10': {
+        'BATCH_SIZE': 100,
+        'LR': 0.001,  # 100에폭까지 0.001, 150에폭 까지 0.0005, 200에폭까지 0.00025, 250에폭까지 0.0001
+        'EPOCH': 250,
+        'KEEP_PROB': 0.9,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#11': {
+        'BATCH_SIZE': 128,
+        'LR': 0.001,  # 100에폭까지 0.001, 200에폭 까지 0.0005 이후 0.0001
+        'EPOCH': 400,
+        'KEEP_PROB': 0.9,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#12': {  # He
+        'BATCH_SIZE': 128,
+        'LR': 0.001,  # 250에폭까지 0.001, 350에폭 까지 0.0005 이후 0.0001
+        'EPOCH': 400,
+        'KEEP_PROB': 0.9,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#13': {  # He, expo decay
+        'BATCH_SIZE': 128,
+        'LR': 0.001,
+        'EPOCH': 300,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#14': {  # He, expo decay
+        'BATCH_SIZE': 128,
+        'LR': 0.001,
+        'EPOCH': 400,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#15': {  # He, expo decay
+        'BATCH_SIZE': 64,
+        'LR': 0.001,
+        'EPOCH': 300,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#16': {  # He, expo decay
+        'BATCH_SIZE': 256,
+        'LR': 0.001,
+        'EPOCH': 300,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 1,
+        'DECAY_STEPS': 1000
+    },
+    'SET#17': {  # He, expo decay
+        'BATCH_SIZE': 64,
+        'LR': 0.001,
+        'EPOCH': 300,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 0.98,
+        'DECAY_STEPS': 1000
+    },
+    'SET#18': {  # expo decay
+        'BATCH_SIZE': 64,
+        'LR': 0.001,
+        'EPOCH': 300,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 0.99,
+        'DECAY_STEPS': 1000
+    },
+    'SET#19': {  # expo decay
+        'BATCH_SIZE': 64,
+        'LR': 0.001,
+        'EPOCH': 400,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 0.98,
+        'DECAY_STEPS': 1000
+    },
+    'SET#20': {  # He, expo decay
+        'BATCH_SIZE': 128,
+        'LR': 0.001,
+        'EPOCH': 400,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 0.99,
+        'DECAY_STEPS': 1000
+    },
+    'SET#21': {  # expo decay
+        'BATCH_SIZE': 32,
+        'LR': 0.001,
+        'EPOCH': 400,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 0.99,
+        'DECAY_STEPS': 1000
+    },
+    'SET#22': {  # 002 init
+        'BATCH_SIZE': 64,
+        'LR': 0.001,
+        'EPOCH': 300,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 0.99,
+        'DECAY_STEPS': 1000
+    },
+    'SET#23': {
+        'BATCH_SIZE': 128,
+        'LR': 0.001,
+        'EPOCH': 300,
+        'KEEP_PROB': 0.8,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 0.99,
+        'DECAY_STEPS': 1000
+    },
+    'SET#24': {  # filter stddev 002
+        'BATCH_SIZE': 64,
+        'LR': 0.001,
+        'EPOCH': 400,
+        'KEEP_PROB': 0.95,
+        'L2_REG_LAMBDA': 0.0001,
+        'DATA_AUGMENTATION': True,
+        'LR_DECAY': 0.99,
+        'DECAY_STEPS': 1000
+    },
 }
 
 # Choose a setting
-setting = Settings['SET#1']
+setting = Settings['SET#24']
 
 # clean flags, graph
 def del_all_flags(FLAGS):
@@ -94,6 +264,8 @@ def del_all_flags(FLAGS):
     keys_list = [keys for keys in flags_dict]
     for keys in keys_list:
         FLAGS.__delattr__(keys)
+
+
 del_all_flags(tf.flags.FLAGS)
 tf.reset_default_graph()
 
@@ -134,13 +306,17 @@ with tf.Graph().as_default():
         # Define Training procedure
         global_step = tf.Variable(0, name="global_step", trainable=False) # iteration 수
 
-        # * hint learning rate decay를 위한 operation을 통해 감쇠된 learning rate를 optimizer에 적용
+
+
+
+        # * hint learning rate decay를 위한 operation을 통해 감쇠된 learning rate를 optimizer에 적용)
         decayed_lr = tf.train.exponential_decay(FLAGS.lr, global_step, FLAGS.decay_steps, FLAGS.lr_decay, staircase=True)
         # decayed_learning_rate = learning_rate * decay_rate ^ (global_step / decay_steps)
 
-
-        optimizer = tf.train.AdamOptimizer(learning_rate=decayed_lr) #Optimizer
-        grads_and_vars = optimizer.compute_gradients(lenet.loss) # gradient 계산
+        # optimizer = tf.train.GradientDescentOptimizer(learning_rate=FLAGS.lr)
+        optimizer = tf.train.AdamOptimizer(learning_rate=decayed_lr)
+        # optimizer = tf.train.AdamOptimizer(learning_rate=FLAGS.lr)  # Optimizer (step decay)
+        grads_and_vars = optimizer.compute_gradients(lenet.loss) # grad_ient 계산
         train_op = optimizer.apply_gradients(grads_and_vars, global_step=global_step) # back-propagation
 
         # Output directory for models and summaries
@@ -210,10 +386,17 @@ with tf.Graph().as_default():
         # Training loop. For each batch...
         max = 0
         start_time = time.time()
+
         for batch in batches: # len(batches) = (45000/batch size) * epoch 수
             x_batch, y_batch = zip(*batch) # batch size 단위로 input과 정답 리턴, e.g., (128, 32, 32, 3), (128, 10),
             train_step(x_batch, y_batch)
             current_step = tf.train.global_step(sess, global_step)
+            # if current_step == 352*200:
+            #     FLAGS.lr *= 0.0005
+            # if current_step == 352*350:
+            #     FLAGS.lr = 0.0001
+            # if current_step == 352*200:
+            #     FLAGS.lr = 0.001
             if current_step % FLAGS.evaluate_every == 0: # 특정 iteration 마다
                 print("\nEvaluation:")
                 accuracy = dev_step(x_val, y_val, writer=dev_summary_writer) # validation accuracy 확인
@@ -225,6 +408,6 @@ with tf.Graph().as_default():
         training_time = (time.time() - start_time) / 60
         print('Learning Finished!')
         print('Validation Max Accuracy:', max)
-        print('Early stopped time:', math.ceil(current_step/352))
+        print('Early stopped time:', math.ceil(current_step/704))
         print('training time: ', training_time)
 
