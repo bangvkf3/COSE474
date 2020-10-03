@@ -68,7 +68,7 @@ class ResNet:
         if weight_init == 'He':
             return np.sqrt(2.0 / n)
         else:
-            return float(type)
+            return float(weight_init)
 
     def _conv(self, name, x, filter_size, in_filters, out_filters, strides):
         with tf.variable_scope(name):
