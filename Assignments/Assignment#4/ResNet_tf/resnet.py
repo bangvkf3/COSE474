@@ -93,12 +93,12 @@ class ResNet:
                 x = self._relu(x, self._relu_leakiness)
 
         with tf.variable_scope('sub1'):
-            x = self._conv('conv1', x, filter_size=3, in_filters=in_filter, out_filters=out_filter, strides=[1, 1, 1, 1])
+            x = self._conv('conv1', x, filter_size=3, in_filters=in_filter, out_filters=out_filter, strides=strides)
 
         with tf.variable_scope('sub2'):
             x = self._batch_norm('bn2', x)
             x = self._relu(x, self._relu_leakiness)
-            x = self._conv('conv2', x, filter_size=3, in_filters=in_filter, out_filters=out_filter, strides=[1, 1, 1, 1])
+            x = self._conv('conv2', x, filter_size=3, in_filters=in_filter, out_filters=out_filter, strides=strides)
 
         with tf.variable_scope('sub_add'):
             if in_filter != out_filter: # stride 크기가 2일 때 channel 크기가 안맞는 경우 크기 조정을 통해 skip connection이 원활하게 조정
