@@ -13,6 +13,10 @@ tf.logging.set_verbosity(tf.logging.ERROR)
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
+
+# result 파일 생성
+f = open("./train_result.txt", 'w')
+
 # 결과 시트
 results = {}
 
@@ -180,9 +184,12 @@ for i in range(set_start, set_end + 1):
             result['val_max'] = max
             results[f'Setting#{i}'] = result
 
+# result 파일 입력
 for setting, result in results.items():
-    print(f'< {setting} result >')
-    print(' - Training time: ', result['training_time'])
-    print(' - Early stopping epoch:', result['early_stopping_epoch'])
-    print(' - Validation Max Accuracy:', result['val_max'])
-    print()
+    f.write(f"< {setting} result >\n")
+    f.write(f" - Training time: {result['training_time']}\n")
+    f.write(f" - Early stopping epoch: {result['early_stopping_epoch']}\n")
+    f.write(f" - Validation Max Accuracy: {result['val_max']}\n\n")
+
+# result 파일 닫기
+f.close()
