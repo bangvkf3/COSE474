@@ -170,12 +170,13 @@ for i in range(set_start, set_end + 1):
                     print("")
                     if accuracy > max:
                         max = accuracy
+                        early_stopped = ceil(current_step / ceil(45000 / setting['BATCH_SIZE']))
                         path = saver.save(sess, checkpoint_prefix, global_step=current_step)
                         print("Saved model checkpoint to {}\n".format(path))
 
             result = {}
             result['training_time'] = training_time = (time.time() - start_time) / 60
-            result['early_stopping_epoch'] = ceil(current_step / ceil(45000 / setting['BATCH_SIZE']))
+            result['early_stopping_epoch'] = early_stopped
             result['val_max'] = max
             results[f'Setting#{i}'] = result
 
