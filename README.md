@@ -5,6 +5,7 @@ Repo for COSE474(01) - Deep Learning @KoreaUniversity
 - Tensorflow@1.13.1
 - matplotlib
 - numpy@1.16.6
+- SciPy@1.1.0
 
 ```python
 # 에러 무시
@@ -31,3 +32,4 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
     - Residual learning
     - Batch normalization
     - Test accuracy(final) for CIFAR-10 : 91.22%
+    - Inference on my cat : correct

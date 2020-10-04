@@ -1,9 +1,15 @@
 import tensorflow as tf
-import CIFAR.data_helpers as dh
+import os
+import data_helpers as dh
 import numpy as np
 
+# 에러 무시 코드
+tf.logging.set_verbosity(tf.logging.ERROR)
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 # Eval Parameters
-tf.flags.DEFINE_string("checkpoint_dir", "./runs/1601245135/checkpoints", "Checkpoint directory from training run")
+tf.flags.DEFINE_string("checkpoint_dir", "./runs/1601779792/checkpoints", "Checkpoint directory from training run")
 
 FLAGS = tf.flags.FLAGS
 
