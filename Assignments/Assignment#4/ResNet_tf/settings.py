@@ -38,4 +38,17 @@ settings = {
         'DATA_AUGMENTATION': True,
         'OPTIMIZER': 'SGD',
     },
+    'SET#4': {
+        'LR': 0.1,
+        'LR_DECAY': 0.1,
+        'L2_REG_LAMBDA': 0.0001,
+        'RELU_LEAKINESS': 0.1,
+        'NUM_RESIDUAL_UNITS': 5,
+        'NUM_CLASSES': 10,
+        'WEIGHT_INIT': 'He',
+        'BATCH_SIZE': 128,
+        'NUM_EPOCHS': 200,
+        'DATA_AUGMENTATION': True,
+        'OPTIMIZER': 'SGD',
+    },
 }

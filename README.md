@@ -26,8 +26,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
     - Convolution, pooling, FC layers
     - Filter initialization
     - Learning rate decay
-    - Train accuracy(final) for CIFAR-10 : 73.01%
+    - Test accuracy(final) for CIFAR-10 : 73.01%
  - [x] ResNet
     - Residual learning
     - Batch normalization
-    
+    - Test accuracy(final) for CIFAR-10 : 91.22%

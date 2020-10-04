@@ -10,9 +10,10 @@ os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 TimeStamp = {
-    'Setting#1': "1601189007",
-    'Setting#2': "1601196973",
-    'Setting#3': "1601191502",
+    'Setting#1': "1601772159",
+    'Setting#2': "1601779792",
+    'Setting#3': "1601787467",
+    'Setting#4': "1601793167",
 }
 
 (x_train_val, y_train_val), (x_test, y_test) = load_data()
