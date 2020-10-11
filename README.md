@@ -35,5 +35,6 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
   - Batch normalization
   - Test accuracy(final) for CIFAR-10 : 91.22%
   - Inference on my cat
-- [ ] GAN
+- [x] GAN
   - Conditional GAN
+  - Conditional DCGAN

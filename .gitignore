@@ -278,3 +278,9 @@ MNIST_data/
 *.xlsx
 
 runs/
+
+out/
+
+data/
+
+final_out/

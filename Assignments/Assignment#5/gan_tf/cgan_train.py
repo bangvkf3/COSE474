@@ -27,8 +27,13 @@ tf.reset_default_graph()
 # Model Hyperparameters
 tf.flags.DEFINE_integer("Z_dim", 100, "Dimensionality of noise vector (default: 100)")
 tf.flags.DEFINE_integer("Y_dim", 10, "The number of labels (default: 10)")
-tf.flags.DEFINE_integer("G_hidden_dim", 128, "Dimensionality of hidden layer (default: 100)")
-tf.flags.DEFINE_integer("D_hidden_dim", 128, "Dimensionality of hidden layer (default: 100)")
+tf.flags.DEFINE_integer("G_hidden_dim_1", 256, "Dimensionality of hidden layer (default: 100)")
+tf.flags.DEFINE_integer("D_hidden_dim_1", 256, "Dimensionality of hidden layer (default: 100)")
+tf.flags.DEFINE_integer("G_hidden_dim_2", 128, "Dimensionality of hidden layer (default: 100)")
+tf.flags.DEFINE_integer("D_hidden_dim_2", 128, "Dimensionality of hidden layer (default: 100)")
+# tf.flags.DEFINE_integer("G_hidden_dim_3", 512, "Dimensionality of hidden layer (default: 100)")
+# tf.flags.DEFINE_integer("D_hidden_dim_3", 512, "Dimensionality of hidden layer (default: 100)")
+
 
 tf.flags.DEFINE_float("lr", 1e-3, "Learning rate(default: 0.01)")
 tf.flags.DEFINE_float("lr_decay", 0.99, "Learning rate decay rate (default: 0.98)")

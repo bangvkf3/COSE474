@@ -51,7 +51,7 @@ for i in range(set_start, set_end + 1):
                             "The number of residual_units (default: 5)")
     tf.flags.DEFINE_integer("num_classes", 10, "The number of classes (default: 10)")
     tf.flags.DEFINE_string("weight_init", setting['WEIGHT_INIT'], "Weight initialization type (default: He)")
-
+a
     # Training parameters
     tf.flags.DEFINE_integer("batch_size", setting['BATCH_SIZE'], "Batch Size (default: 64)")
     tf.flags.DEFINE_integer("num_epochs", setting['NUM_EPOCHS'], "Number of training epochs (default: 200)")
