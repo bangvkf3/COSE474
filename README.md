@@ -18,6 +18,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 ## Assignments
 
 - [x] Perceptron
+
 - [x] Multi-Layer Perceptron
   - 4 Layer
   - Weight initializer(He, Xavier)
@@ -25,16 +26,26 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
   - Weight decay
   - Early stopping epoch
   - Analyzing models with TensorBoard
+  
 - [x] LeNet
   - Convolution, pooling, FC layers
   - Filter initialization
   - Learning rate decay
   - Test accuracy(final) for CIFAR-10 : 73.01%
+  
 - [x] ResNet
   - Residual learning
   - Batch normalization
   - Test accuracy(final) for CIFAR-10 : 91.22%
   - Inference on my cat
+  
 - [x] GAN
   - Conditional GAN
   - Conditional DCGAN
+  
+- [x] Word2Vec
+  - Skip-Gram
+  - CBOW
+  - Hierarchical softmax
+  - Negative sampling
+  > [1billion data](https://code.google.com/archive/p/word2vec/)
