@@ -50,4 +50,4 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
   - Negative sampling
   > [1billion data](https://code.google.com/archive/p/word2vec/)
 
-- [ ] fastText
+- [x] fastText

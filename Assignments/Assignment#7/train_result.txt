@@ -1,0 +1,21 @@
+< Setting#1 result >
+ - Training time: 155.62559093236922
+ - Score : 0.35076465154469877
+ - len of model.wv.vocab : 354849
+
+< Setting#2 result >
+ - Training time: 186.20439598560333
+ - Score : 0.33593349071127987
+ - len of model.wv.vocab : 354849
+
+< Setting#3 result >
+ - Training time: 620.8048918366433
+ - Score : 0.5628143282356564
+ - len of model.wv.vocab : 354849
+
+< Setting#4 result >
+ - Training time: 362.2037290652593
+ - Score : 0.37534640254541723
+ - len of model.wv.vocab : 354849
+
+
