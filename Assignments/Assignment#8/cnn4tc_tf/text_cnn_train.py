@@ -10,6 +10,11 @@ import text_classification_master.data_helpers as dh
 from text_classification_master.text_cnn import TextCNN
 from gensim.models.keyedvectors import KeyedVectors
 
+# 에러 무시 코드
+tf.logging.set_verbosity(tf.logging.ERROR)
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 # Parameters
 # ==================================================
 
@@ -21,22 +26,23 @@ tf.flags.DEFINE_string("mr_train_file_neg", "./data/MR/rt-polarity.neg", "Data s
 
 tf.flags.DEFINE_string("word2vec", "./data/GoogleNews-vectors-negative300.bin", "Word2vec file with pre-trained embeddings (default: None)")
 tf.flags.DEFINE_string("task", "MR", "Choose the classification task")
+tf.flags.DEFINE_bool("is_multichannel", False, "Whether to use the multichannel model")
 
 # Model Hyperparameters
 tf.flags.DEFINE_integer("vocab_size", 30000, "Vocabulary size (defualt: 0)")
-tf.flags.DEFINE_integer("num_classes", 0, "The number of labels (defualt: 0)")
+tf.flags.DEFINE_integer("num_classes", 2, "The number of labels (defualt: 0)")
 tf.flags.DEFINE_integer("max_length", 0, "max sequence length (defualt: 0)")
 tf.flags.DEFINE_integer("embedding_dim", 300, "Dimensionality of character embedding (default: 128)")
 tf.flags.DEFINE_string("filter_sizes", "3,4,5", "Comma-separated filter sizes (default: '3,4,5')")
-tf.flags.DEFINE_integer("num_filters", 100, "Number of filters per filter size (default: 128)")
+tf.flags.DEFINE_integer("num_filters", 256, "Number of filters per filter size (default: 128)")
 tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (default: 0.5)")
 tf.flags.DEFINE_float("l2_reg_lambda", 0.0001, "L2 regularization lambda (default: 0.0)")
-tf.flags.DEFINE_float("lr_decay", 0.99, "Learning rate decay rate (default: 0.98)")
+tf.flags.DEFINE_float("lr_decay", 0.97, "Learning rate decay rate (default: 0.98)")
 tf.flags.DEFINE_float("lr", 1e-1, "Learning rate(default: 0.01)")
 
 # Training parameters
 tf.flags.DEFINE_integer("batch_size", 50, "Batch Size (default: 64)")
-tf.flags.DEFINE_integer("num_epochs", 100, "Number of training epochs (default: 200)")
+tf.flags.DEFINE_integer("num_epochs", 200, "Number of training epochs (default: 200)")
 tf.flags.DEFINE_integer("evaluate_every", 100, "Evaluate model on dev set after this many steps (default: 100)")
 tf.flags.DEFINE_integer("checkpoint_every", 100, "Save model after this many steps (default: 100)")
 tf.flags.DEFINE_integer("num_checkpoints", 3, "Number of checkpoints to store (default: 5)")
@@ -182,6 +188,8 @@ def train(x_train, y_train, word_id_dict, x_dev, y_dev):
                         initW[idx] = np.asarray(arr).astype(np.float32) # 적절한 index에 word2vec word 할당
                 print("assigning initW to cnn. len=" + str(len(initW)))
                 sess.run(cnn.W.assign(initW)) # initW를 cnn.W에 할당
+                if FLAGS.is_multichannel:
+                    sess.run(cnn.W2.assign(initW))
 
             def train_step(x_batch, y_batch):
                 feed_dict = {

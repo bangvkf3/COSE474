@@ -52,7 +52,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 - [x] fastText
 
-- [ ] CNN for sentence classification
+- [x] CNN for sentence classification
   - CNN-rand
   - CNN-static
   - CNN-non-static

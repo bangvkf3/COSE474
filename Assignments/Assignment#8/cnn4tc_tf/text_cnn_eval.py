@@ -5,8 +5,15 @@ import numpy as np
 import os
 import smart_open
 import pickle
-from text_classification_master.text_cnn import TextCNN
+from text_classification_master.text_cnn_multi import TextCNN
 import text_classification_master.data_helpers as dh
+
+
+# 에러 무시 코드
+tf.logging.set_verbosity(tf.logging.ERROR)
+os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 
 # Parameters
 # ==================================================
@@ -17,7 +24,7 @@ tf.flags.DEFINE_string("mr_test_file_neg", "./data/MR/rt-polarity_test.neg", "Da
 tf.flags.DEFINE_string("task", "MR", "Choose the classification task")
 
 # Eval Parameters
-tf.flags.DEFINE_string("dir", "./runs/1604643104", "Checkpoint directory from training run")
+tf.flags.DEFINE_string("dir", "./runs/1605379591", "Checkpoint directory from training run")
 
 # Misc Parameters
 tf.flags.DEFINE_boolean("allow_soft_placement", True, "Allow device soft device placement")
